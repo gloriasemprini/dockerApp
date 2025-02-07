@@ -8,7 +8,7 @@
   <div *ngIf="!isEditing" class="profile-details">
     <div class="header-container">
       <p>{{ groupName }}</p>
-      <button (click)="startEditing()" class="modify-button">Modifica</button>
+      <button *ngIf="isAdmin" (click)="startEditing()" class="modify-button">Modifica</button>
     </div>
   </div>
 
