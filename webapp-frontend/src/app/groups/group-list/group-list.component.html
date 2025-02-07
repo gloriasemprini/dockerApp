@@ -1,0 +1,45 @@
+  <div class="group-container">
+    <div class="header-container">
+      <button class="back-button" [routerLink]="['/home']"></button>
+      <h1>Gestione dei gruppi</h1>
+    </div>
+    <div class="group-form-container">
+      <div class="group-form">
+        <div class="form-row">
+          <label for="groupName">Nome del Gruppo:</label>
+          <input type="text" id="groupName" [(ngModel)]="newGroupName" name="groupName" required aria-describedby="groupNameHelp">
+          <button type="submit" class="create-group" (click)="createGroup()">Crea Gruppo</button>
+        </div>
+        <small id="groupNameHelp">Inserisci il nome del gruppo che vuoi creare.</small>
+      </div>
+    </div>
+
+    <div *ngIf="error" class="error-message" role="alert">
+      <p>{{ error }}</p>
+    </div>
+
+    <div *ngIf="emptyMessage" class="empty-message" role="alert">
+      <p>{{ emptyMessage }}</p>
+    </div>
+
+    <div class="group-list-header">
+      <h2>Lista dei Gruppi</h2>
+      <button (click)="refreshGroups()" class="refresh-button" aria-label="Aggiorna la lista dei gruppi">
+        <span class="refresh-icon"></span>
+      </button>
+    </div>
+
+    <div class="group-list">
+      <div *ngIf="(groups$ | async) as groups; else noGroups" class="group-grid">
+        <div *ngFor="let group of groups; let i = index" [ngClass]="'group-card gradient-' + (i % 6)">
+          <a [routerLink]="['/groups', group._id]" routerLinkActive="active" class="group-link">
+            <h3>{{ group.name }}</h3>
+          </a>
+          <button class="go-to-group-button" [routerLink]="['/groups', group._id]">Vai al Gruppo</button>
+        </div>
+      </div>
+      <ng-template #noGroups>
+        <div class="no-groups-message">Non ci sono gruppi.</div>
+      </ng-template>
+    </div>
+  </div>

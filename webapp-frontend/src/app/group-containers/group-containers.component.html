@@ -1,0 +1,55 @@
+<div class="group-container">
+  <div class="header-container">
+    <button class="back-button" [routerLink]="['/groups']"></button>
+    <h1>Gestione dei Container</h1>
+  </div>
+  <div>
+    <div *ngIf="(isAdmin$ | async)?.isAdmin" class="inline-form">
+      <label for="containerName">Nome Container:</label>
+      <input id="containerName" [(ngModel)]="imageName" placeholder="Nome del container" />
+      <label for="portMapping">Porta:</label>
+      <input id="portMapping" [(ngModel)]="portMapping" placeholder="Porta (es. 8080)" />
+      <button (click)="createContainer()" class="create-container">Crea Container</button>
+    </div>
+
+    <div *ngIf="isError" class="error-message">{{ error }}</div>
+    <div *ngIf="isContainerCreated" class="success-message">Container creato con successo!</div>
+
+    <div class="container-list-header">
+      <h2>Lista Container</h2>
+      <button (click)="refreshContainers()" class="refresh-button" aria-label="Aggiorna la lista dei containers">
+        <span class="refresh-icon"></span>
+      </button>
+    </div>
+
+    <p *ngIf="emptyMessage">{{ emptyMessage }}</p>
+    <div class="container-list">
+      <ul *ngIf="(containers$ | async) as containers; else loading" class="container-grid">
+        <li *ngFor="let container of containers; let i = index" [ngClass]="'container-card gradient-' + (i % 6)">
+          <p>Nome: {{ container.name }}</p>
+          <p>Image: {{ container.image }}</p>
+          <p>Stato: {{ container.status }}</p>
+
+          <div class="action-buttons">
+            <button (click)="stopContainer(container.dockerId)" class="go-to-container-button">Ferma</button>
+            <button (click)="startContainer(container.dockerId)" class="go-to-container-button">Avvia</button>
+          </div>
+
+          <div *ngIf="(isAdmin$ | async)?.isAdmin" class="admin-buttons">
+            <button (click)="deleteImage(container.image)" class="go-to-container-button">Elimina Immagine</button>
+          </div>
+        </li>
+      </ul>
+    </div>
+
+    <ng-template #loading>
+      <p>Caricamento dei container...</p>
+    </ng-template>
+
+    <p *ngIf="!(containers$ | async)?.length && !emptyMessage">Nessun container disponibile.</p>
+  </div>
+
+  <div class="group-settings">
+    <button [routerLink]="['/groups', groupId, 'info']" class="go-to-container-button">Impostazioni Gruppo</button>
+  </div>
+</div>

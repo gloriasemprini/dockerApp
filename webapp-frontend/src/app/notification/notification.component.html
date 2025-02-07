@@ -1,0 +1,24 @@
+<div class="notification-dropdown me-3 position-relative">
+  <button (click)="toggleDropdown()" class="btn p-0">
+    <img
+      *ngIf="unreadCount > 0; else readIcon"
+      src="assets/notification_up.svg"
+      alt="Nuove Notifiche"
+      width="24"
+      height="24"
+    />
+    <ng-template #readIcon>
+      <img src="assets/notification_empty.svg" alt="Notifiche Letta" width="24" height="24" />
+    </ng-template>
+  </button>
+  <div [class.show]="dropdownOpen" class="dropdown-menu position-absolute end-0 bg-light shadow">
+    <div *ngIf="unreadNotifications.length > 0; else noNotifications" class="p-2">
+      <div *ngFor="let notification of unreadNotifications" class="dropdown-item text-dark" (click)="markAsRead(notification)">
+        {{ notification.message }}
+      </div>
+    </div>
+    <ng-template #noNotifications>
+      <p class="text-muted text-center p-2">Nessuna notifica</p>
+    </ng-template>
+  </div>
+</div>

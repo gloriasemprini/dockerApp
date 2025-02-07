@@ -1,0 +1,83 @@
+<div class="profile-container">
+  <div class="header-container">
+    <button class="back-button" [routerLink]="['/home']"></button>
+    <h1>Profilo Utente</h1>
+  </div>
+
+  <div *ngIf="errorMessage" class="error-message">
+    {{ errorMessage }}
+  </div>
+
+  <div *ngIf="successMessage" class="success-message">
+    {{ successMessage }}
+  </div>
+
+  <ng-container *ngIf="userProfile$ | async as user">
+    <div class="profile-details">
+      <!-- Nome -->
+      <div class="profile-item">
+        <strong>Nome:</strong>
+        <span *ngIf="editingField !== 'name'">{{ user.name }}</span>
+        <input *ngIf="editingField === 'name'" [(ngModel)]="updatedData.name" />
+        <div class="action-buttons">
+          <button *ngIf="editingField !== 'name'" (click)="enableEdit('name', user.name)" class="stylish-button">Modifica</button>
+          <button *ngIf="editingField === 'name'" (click)="saveChanges('name')" class="stylish-button">Salva</button>
+          <button *ngIf="editingField === 'name'" (click)="cancelEdit()" class="stylish-button">Annulla</button>
+        </div>
+      </div>
+
+      <div class="profile-item">
+        <strong>Cognome:</strong>
+        <span *ngIf="editingField !== 'surname'">{{ user.surname }}</span>
+        <input *ngIf="editingField === 'surname'" [(ngModel)]="updatedData.surname" />
+        <div class="action-buttons">
+          <button *ngIf="editingField !== 'surname'" (click)="enableEdit('surname', user.surname)" class="stylish-button">Modifica</button>
+          <button *ngIf="editingField === 'surname'" (click)="saveChanges('surname')" class="stylish-button">Salva</button>
+          <button *ngIf="editingField === 'surname'" (click)="cancelEdit()" class="stylish-button">Annulla</button>
+        </div>
+      </div>
+
+      <div class="profile-item">
+        <strong>Username:</strong>
+        <span *ngIf="editingField !== 'username'">{{ user.username }}</span>
+        <input *ngIf="editingField === 'username'" [(ngModel)]="updatedData.username" />
+        <div class="action-buttons">
+          <button *ngIf="editingField !== 'username'" (click)="enableEdit('username', user.username)" class="stylish-button">Modifica</button>
+          <button *ngIf="editingField === 'username'" (click)="saveChanges('username')" class="stylish-button">Salva</button>
+          <button *ngIf="editingField === 'username'" (click)="cancelEdit()" class="stylish-button">Annulla</button>
+        </div>
+      </div>
+
+      <div class="profile-item">
+        <strong>Email:</strong>
+        <span *ngIf="editingField !== 'email'">{{ user.email }}</span>
+        <input *ngIf="editingField === 'email'" [(ngModel)]="updatedData.email" />
+        <div class="action-buttons">
+          <button *ngIf="editingField !== 'email'" (click)="enableEdit('email', user.email)" class="stylish-button">Modifica</button>
+          <button *ngIf="editingField === 'email'" (click)="saveChanges('email')" class="stylish-button">Salva</button>
+          <button *ngIf="editingField === 'email'" (click)="cancelEdit()" class="stylish-button">Annulla</button>
+        </div>
+      </div>
+
+      <div class="profile-item">
+        <strong>Password:</strong>
+        <span *ngIf="editingField !== 'password'">********</span>
+        <input
+          *ngIf="editingField === 'password'"
+          [(ngModel)]="updatedData.password"
+          type="password"
+          placeholder="Nuova password"
+        />
+        <div class="action-buttons">
+          <button *ngIf="editingField !== 'password'" (click)="enableEdit('password')" class="stylish-button">Modifica</button>
+          <button *ngIf="editingField === 'password'" (click)="saveChanges('password')" class="stylish-button">Salva</button>
+          <button *ngIf="editingField === 'password'" (click)="cancelEdit()" class="stylish-button">Annulla</button>
+        </div>
+      </div>
+
+      <button class="delete-button" (click)="deleteProfile()" routerLink="/login">
+        Elimina Profilo
+      </button>
+    </div>
+  </ng-container>
+</div>

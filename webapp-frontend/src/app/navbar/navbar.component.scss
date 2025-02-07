@@ -1,0 +1,96 @@
+.navbar {
+  background: linear-gradient(135deg, #00C9A7, #0083A6);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: relative;
+  padding: 10px 15px;
+  min-height: 60px;
+}
+
+.navbar-brand {
+  font-weight: bold;
+  text-align: left;
+  margin-left: 15px;
+  position: relative;
+  z-index: 10;
+}
+
+.notification {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  right: 15px;
+  z-index: 1050;
+}
+
+.navbar-toggler {
+  position: absolute;
+  right: 15px;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 10;
+}
+
+.navbar-collapse {
+  justify-content: center;
+}
+
+.notification-panel {
+  position: absolute;
+  top: 50px;
+  right: 15px;
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+  width: 300px;
+  max-width: 90vw;
+  padding: 10px;
+  z-index: 1051;
+  overflow: hidden;
+  word-wrap: break-word;
+}
+
+@media (max-width: 992px) {
+  .navbar {
+    justify-content: space-between;
+    position: relative;
+    min-height: 65px;
+  }
+
+  .navbar-brand {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    text-align: center;
+    z-index: 10;
+  }
+
+  .navbar-toggler {
+    left: 15px;
+    right: auto;
+    z-index: 11;
+  }
+
+  .notification {
+    right: 15px;
+    z-index: 12;
+  }
+
+  .navbar-collapse {
+    background: linear-gradient(135deg, #00C9A7, #0083A6);
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    z-index: 9;
+    padding: 10px 0;
+    text-align: center;
+  }
+
+  .notification-panel {
+    right: 10px;
+    width: 280px;
+    max-width: 90vw;
+  }
+}

@@ -1,0 +1,23 @@
+.notification-dropdown {
+  position: relative;
+  margin-left: 15px;
+  z-index: 1050;
+
+  .dropdown-menu {
+    transition: opacity 0.3s ease-in-out;
+    opacity: 0;
+    visibility: hidden;
+    max-height: 300px;
+    overflow-y: auto;
+  }
+
+  .dropdown-menu.show {
+    opacity: 1;
+    visibility: visible;
+  }
+
+  img {
+    cursor: pointer;
+    filter: brightness(0) invert(1);
+  }
+}

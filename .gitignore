@@ -1,0 +1,9 @@
+# Directory
+.idea/*
+.git/*
+webapp-backend/node_modules/*
+webapp-frontend/.angular/*
+webapp-frontend/.vscode/*
+webapp-frontend/dist/*
+webapp-frontend/node_modules/*
+webapp-frontend/public/*

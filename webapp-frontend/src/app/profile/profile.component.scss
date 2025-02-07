@@ -1,0 +1,132 @@
+.profile-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  background: linear-gradient(135deg, #0083A6, #00C9A7);
+  color: #FFFFFF;
+  padding: 20px;
+  text-align: center;
+}
+
+.header-container {
+  display: flex;
+  align-items: center;  // Centra verticalmente il testo e il bottone
+  gap: 10px;  // Spazio tra il bottone e il titolo
+}
+
+h1 {
+  font-size: 2.5rem;
+  text-transform: uppercase;
+  margin-bottom: 0;  // Elimina il margine inferiore del titolo
+}
+
+.profile-details {
+  background-color: rgba(255, 255, 255, 0.1);
+  padding: 20px;
+  border-radius: 15px;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2);
+  max-width: 500px;
+  width: 100%;
+}
+
+.profile-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+  font-size: 1.2rem;
+
+  input {
+    background-color: rgba(255, 255, 255, 0.9);
+    border: none;
+    border-radius: 8px;
+    padding: 8px;
+    font-size: 1rem;
+    width: 60%;
+  }
+}
+
+.action-buttons {
+  display: flex;
+  gap: 10px;
+}
+
+.stylish-button {
+  background-color: transparent;
+  border: 2px solid white;
+  color: white;
+  padding: 8px 16px;
+  border-radius: 8px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+
+  &:hover {
+    background-color: white;
+    color: #0083A6;
+    transform: scale(1.05);
+  }
+
+  @media (max-width: 768px) {
+    filter: brightness(0) invert(1);
+    background-color: transparent;
+    background-image: url("../../assets/modifica.svg");
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center;
+    width: 32px;
+    height: 32px;
+    border: none;
+    padding: 0;
+    color: transparent;
+    text-indent: -9999px;
+    margin-left: 8px;
+  }
+}
+
+
+.delete-button {
+  background-color: #800000;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 8px;
+  font-size: 1.1rem;
+  margin-top: 20px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.delete-button:hover {
+  background-color: #a00000;
+}
+
+.back-button {
+  background-image: url("../../assets/back.svg");
+  background-size: 24px 24px;
+  background-position: center;
+  background-repeat: no-repeat;
+
+  /* Applica il filtro per rendere l'immagine bianca */
+  filter: brightness(0) invert(1);
+
+  /* Background color con bordo bianco */
+  background-color: rgba(255, 255, 255, 0.2);
+  border: 2px solid white;
+  border-radius: 50%; /* Per ottenere il bottone senza spigoli */
+  width: 40px;
+  height: 40px;
+  padding: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+
+  &:hover {
+    background-color: rgba(255, 255, 255, 0.5);
+  }
+}

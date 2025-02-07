@@ -1,0 +1,87 @@
+<div class="group-container">
+  <div class="header-container">
+    <button class="back-button" [routerLink]="['/groups', groupId]"></button>
+    <h1>Dettagli del Gruppo</h1>
+  </div>
+
+
+  <div *ngIf="!isEditing" class="profile-details">
+    <div class="header-container">
+      <p>{{ groupName }}</p>
+      <button (click)="startEditing()" class="modify-button">Modifica</button>
+    </div>
+  </div>
+
+  <div *ngIf="isEditing" class="profile-details">
+    <input [(ngModel)]="groupName" placeholder="Modifica nome gruppo" class="input-field" />
+    <div class="action-buttons">
+      <button (click)="confirmEditing()" class="stylish-button">Conferma</button>
+      <button (click)="cancelEditing()" class="stylish-button">Annulla</button>
+    </div>
+  </div>
+
+  <div *ngIf="error" class="error-message">
+    {{ error }}
+  </div>
+
+  <div *ngIf="groupUsers$ | async as groupUsers" class="profile-details">
+    <h3>Utenti nel Gruppo:</h3>
+    <div class="user-card-container">
+      <div *ngFor="let guser of groupUsers; let i = index" [ngClass]="'user-card gradient-' + (i % 6)">
+        <div class="user-info">
+          <span [ngClass]="{'admin-user': guser.isAdmin}" class="user-name">{{ guser.name }}</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="isAdmin" class="button-container">
+    <button (click)="openInviteUserModal()" class="stylish-button">Invita Utente</button>
+    <button (click)="openRemoveUserModal()" class="stylish-button">Rimuovi Utente</button>
+    <button (click)="openPromoteUserModal()" class="stylish-button">Promuovi a Admin</button>
+  </div>
+
+  <div class="button-container">
+    <button *ngIf="!isAdmin" (click)="leaveGroup()" routerLink="/groups" class="delete-button">Esci dal gruppo</button>
+    <button *ngIf="isAdmin" (click)="adminLeaveGroup()" routerLink="/groups" class="delete-button">Esci dal gruppo come Admin</button>
+  </div>
+
+  <div *ngIf="isInviteUserModalOpen" class="modal">
+    <div class="modal-content">
+      <h2>Invita un utente</h2>
+      <div *ngIf="(availableUsers$ | async) as availableUsers">
+        <div *ngFor="let user of availableUsers; let i = index" [ngClass]="'user-card gradient-' + (i % 6)">
+          <span>{{ user.name }}</span>
+          <button (click)="inviteUser(user._id)" class="invite-button"></button>
+        </div>
+      </div>
+      <button (click)="closeInviteModal()" class="stylish-button">Chiudi</button>
+    </div>
+  </div>
+
+  <div *ngIf="isRemoveUserModalOpen" class="modal">
+    <div class="modal-content">
+      <h2>Rimuovi un utente</h2>
+      <div *ngIf="(excludeUsers$ | async) as groupUsers">
+        <div *ngFor="let user of groupUsers; let i = index" [ngClass]="'user-card gradient-' + (i % 6)">
+          <span>{{ user.name }}</span>
+          <button (click)="removeUser(user._id)" class="remove-button"></button>
+        </div>
+      </div>
+      <button (click)="closeRemoveUserModal()" class="stylish-button">Chiudi</button>
+    </div>
+  </div>
+
+  <div *ngIf="isPromoteUserModalOpen" class="modal">
+    <div class="modal-content">
+      <h2>Promuovi un utente a Admin</h2>
+      <div *ngIf="(excludeUsers$ | async) as groupUsers">
+        <div *ngFor="let user of groupUsers; let i = index" [ngClass]="'user-card gradient-' + (i % 6)">
+          <span>{{ user.name }}</span>
+          <button *ngIf="!user.isAdmin" (click)="promoteUser(user._id)" class="promote-button"></button>
+        </div>
+      </div>
+      <button (click)="closePromoteUserModal()" class="stylish-button">Chiudi</button>
+    </div>
+  </div>
+</div>
