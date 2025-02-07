@@ -72,11 +72,7 @@ router.post('/:groupId/create-container', authenticate, checkGroupExists, checkG
 router.delete('/:groupId/delete-image', authenticate, checkGroupExists, checkGroupMembership, checkAdminRole, async (req, res) => {
     try {
         const result = await containerController.deleteImage(req, res);
-        if (result.statusCode) {
-            return res.status(result.statusCode).json(result);
-        } else {
-            return res.status(500).json({ error: 'Errore sconosciuto' });
-        }
+        return res.status(result.status).json({ message: result.message });
     } catch (error) {
         console.error('Errore nella route delete-image:', error);
         return res.status(500).json({ message: 'Errore nella route delete-image', error: error.message || error });

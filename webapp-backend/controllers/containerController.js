@@ -69,13 +69,13 @@ exports.createContainer = async (req) => {
 
         sendNotification({
             type: 'container-created',
-            message: `Container ${containerId} creato e avviato con successo.`
+            message: `Container ${imageName} creato e avviato con successo.`
         });
 
         notificationService.emit('containerevent', {
             event: 'create',
             containerId,
-            message: `Container ${containerId} creato e avviato con successo.`,
+            message: `Container ${imageName} creato e avviato con successo.`,
         });
 
         return {
@@ -106,17 +106,19 @@ exports.stopContainer = async (req) => {
 
     try {
         const container = docker.getContainer(containerId);
+        const containerInfo = await container.inspect();
+        const containerImage = containerInfo.Config.Image;
         await container.stop();
 
         notificationService.emit('containerevent', {
             event: 'stop',
             containerId,
-            message: `Container ${containerId} fermato con successo.`,
+            message: `Container ${containerImage} fermato con successo.`,
         });
 
         sendNotification({
             type: 'container-stopped',
-            message: `Container ${containerId} fermato con successo.`
+            message: `Container ${containerImage} fermato con successo.`
         });
 
         return {
@@ -142,17 +144,19 @@ exports.startContainer = async (req) => {
 
     try {
         const container = docker.getContainer(containerId);
+        const containerInfo = await container.inspect();
+        const containerImage = containerInfo.Config.Image;
         await container.start();
 
         sendNotification({
             type: 'container-started',
-            message: `Container ${containerId} avviato con successo.`
+            message: `Container ${containerImage} avviato con successo.`
         });
 
         notificationService.emit('containerevent', {
             event: 'start',
             containerId,
-            message: `Container ${containerId} avviato con successo.`,
+            message: `Container ${containerImage} avviato con successo.`,
         });
 
         return {
@@ -224,7 +228,8 @@ exports.deleteImage = async (req) => {
                     type: 'error',
                     message: `Errore nel rimuovere il container ${containerData.dockerId}`,
                     error: err.message
-                });            }
+                });
+            }
         });
 
         await Promise.all(removeContainerPromises);
@@ -241,7 +246,7 @@ exports.deleteImage = async (req) => {
             event: 'deleteImage',
             message: `Immagine ${imageName} e relativi container eliminati correttamente.`,
         });
-
+        console.log('io invio un 200');
         return { status: 200, message: `Immagine ${imageName} e relativi container eliminati correttamente.` };
     } catch (error) {
         console.error("Errore durante l'eliminazione:", error.message);
